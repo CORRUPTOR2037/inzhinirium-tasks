@@ -1,0 +1,179 @@
+<html>
+    <head>
+        <title>Школа "Инжинириум"</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap" rel="stylesheet">
+        <style>
+            body {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                font-family: Montserrat;
+                overflow-x: hidden;
+            }
+            header, footer {
+                text-align: center;
+                padding: 50px;
+                font-size: 30px;
+            }
+            header {
+                width: 1000px;
+                height: 50px;
+                margin-left: auto;
+                margin-right: auto;
+                background-color: yellow;
+                margin-bottom: 50px;
+            }
+            footer {
+                height: 100px;
+                background-color: rgb(214, 214, 214);
+                margin-top: 50px;
+            }
+            .left-column, .right-column {
+                display: inline-block;
+                height: 600px;
+                vertical-align:top;
+            }
+            .left-column {
+                margin-left: 15%;
+                width: 350px;
+            }
+            .right-column {
+                transition: opacity 300ms;
+            }
+            .city h2, .city h4 {
+                user-select: none;
+            }
+            .city a {
+                cursor: pointer;
+            }
+            .city a:hover {
+                cursor: pointer;
+                color: rgb(54, 54, 54);
+                text-decoration: underline;
+            }
+            .city h4 {
+                margin-left: 20px;
+            }
+            .point-info label {
+                font-weight: bold;
+            }
+            .map {
+                background-color: rgb(64, 95, 131);
+                display: block;
+                width: 550px;
+                height: 250px;
+                text-align: center;
+                padding-top: 240px;
+            }
+            .point-info {
+                width: 350px;
+                margin-right: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            Хедер
+        </header>
+        <div>
+            <div class="left-column">
+                <div id="cities">
+
+                </div>
+            </div>
+            <div class="right-column" style="opacity: 0">
+                <div class="point-info" style="display: inline-block;">
+                    <label>Адрес: </label><span class="data-line address">абвгд</span> <br><br>
+                    <label>Телефон: </label><span class="data-line phone">абвгд</span>
+                </div>
+                <div class="map" style="display: inline-block;">
+                    Карта
+                </div>
+            </div>
+        </div>
+        <script>
+            let cities = [
+                { "Москва": ["Бауманская", "Кузьминки", "Коммунарка"] },
+                { "Санкт-Петербург": [] },
+                { "Краснодар": [] },
+                { "Пермь": [] },    
+                { "Нижний Новгород": [] }     
+            ];
+            let points = {
+                "Бауманская": {
+                    "phone": "+7 (495) 123-45-67",
+                    "address": "Москва, ул. Бауманская, д. 15, стр. 1"
+                },
+                "Кузьминки": {
+                    "phone": "+7 (495) 234-56-78",
+                    "address": "Москва, ул. Юных Ленинцев, д. 72"
+                },
+                "Коммунарка": {
+                    "phone": "+7 (495) 345-67-89",
+                    "address": "Москва, пос. Коммунарка, ул. Липовый Парк, д. 5"
+                },
+                "Санкт-Петербург": {
+                    "phone": "+7 (812) 456-78-90",
+                    "address": "Санкт-Петербург, Невский проспект, д. 45"
+                },
+                "Краснодар": {
+                    "phone": "+7 (861) 567-89-01",
+                    "address": "Краснодар, ул. Красная, д. 128"
+                },
+                "Пермь": {
+                    "phone": "+7 (342) 678-90-12",
+                    "address": "Пермь, ул. Ленина, д. 56"
+                },
+                "Нижний Новгород": {
+                    "phone": "+7 (831) 789-01-23",
+                    "address": "Нижний Новгород, ул. Большая Покровская, д. 32"
+                }
+            };
+            let citiesContainer = document.getElementById("cities");
+            let pointInfo = document.querySelector(".right-column");
+            
+            let pointPhone = document.querySelector(".data-line.phone");
+            let pointAddress = document.querySelector(".data-line.address");
+
+            function setCity(caller)
+            {
+                pointInfo.style.opacity = '0';
+
+                setTimeout(() =>
+                {
+                    pointPhone.innerHTML = points[caller.innerHTML]['phone'];
+                    pointAddress.innerHTML = points[caller.innerHTML]['address'];
+                    pointInfo.style.opacity = '1';
+                }, 400);
+            }
+
+            cities.forEach((el) =>
+            {
+                let div = document.createElement('div');
+                div.className = "city";
+
+                let cityName = Object.keys(el)[0];
+                let cityNameEl = document.createElement('h2');
+                let subPointsLen = el[cityName].length;
+                
+                if (subPointsLen == 0)
+                    cityNameEl.innerHTML = '<a onclick="setCity(this)">' + cityName + '</a>';
+                else
+                    cityNameEl.innerHTML = cityName;
+                div.appendChild(cityNameEl);
+
+                el[cityName].forEach((point) =>
+                {
+                    let h = document.createElement('h4');
+                    h.innerHTML = '<a onclick="setCity(this)">' + point + '</a>';
+                    div.appendChild(h);
+                });      
+                
+                citiesContainer.appendChild(div);
+            });
+        </script>
+        <footer>
+            Футер
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <title>Школа "Инжинириум"</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap" rel="stylesheet">
+        <style>
+            body {
+                width: 1000px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                font-family: Montserrat;
+                overflow-x: hidden;
+            }
+            header, footer {
+                text-align: center;
+                padding: 50px;
+                font-size: 30px;
+            }
+            header {
+                height: 50px;
+                background-color: yellow;
+                margin-bottom: 50px;
+            }
+            footer {
+                height: 100px;
+                background-color: rgb(214, 214, 214);
+                margin-top: 50px;
+            }
+            .review {
+                padding: 50px 100px;
+                background-color: #f7f7f7;
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            Хедер
+        </header>
+        <div id="reviews-container">
+            <div class="review" style="display: none">
+                <h3>Имя</h3>
+                <p>Текст</p>
+            </div>
+        </div>
+
+        <script>
+            var reviews = [
+                {
+                    "author": "Светлана К.",
+                    "text": "Огромное спасибо преподавателям! Ребенок (10 лет) с нуля научился не просто играть в компьютер, а создавать свои первые простые игры на Scratch. Теперь вместо бесцельного блуждания в интернете пытается придумать собственный проект. Очень вдохновляет!"
+                },
+                {
+                    "author": "Дмитрий П.",
+                    "text": "Выбирали курсы с упором на Python для сына-подростка. Остались очень довольны. Подача материала от простого к сложному, много практики и интересных задач. После курса сын смог самостоятельно написать несложный телеграм-бота. Отличная база для будущего."
+                },
+                {
+                    "author": "Ольга М.",
+                    "text": "Моя дочь (9 лет) сначала скептически отнеслась к идее, но после первого же занятия в восторге! Преподаватель умеет заинтересовать, уроки проходят в игровой форме. Теперь она щеголяет знаниями о циклах и переменных. Рекомендую всем родителям!"
+                },
+                {
+                    "author": "Андрей Г.",
+                    "text": "Как IT-специалист, могу оценить качество программы. Все структурировано, нет «воды», только практические навыки, которые пригодятся в будущем. Ребенок не только программирует, но и учится логически мыслить и решать задачи. Это бесценно."
+                },
+                {
+                    "author": "Мария Р.",
+                    "text": "Очень понравился индивидуальный подход. У нас был пробел в знаниях после другой школы, но здесь быстро помогли нагнать группу. Преподаватель всегда на связи, подробно отвечает на вопросы детей и родителей. Чувствуется настоящая забота о результате."
+                },
+                {
+                    "author": "Игорь Л.",
+                    "text": "Сын прошел курс по веб-разработке. Результат превзошел ожидания – он сделал свой первый сайт-портфолио с несколькими страницами! Видно, что ему реально интересно. Планируем продолжить обучение на более продвинутом курсе."
+                },
+                {
+                    "author": "Анастасия В.",
+                    "text": "Цена/качество на отличном уровне. По сравнению с другими школами, здесь дают намного больше за те же деньги. Ребенок не просто выполняет задания по шаблону, а понимает, что и зачем он делает. Спасибо за такой подход!"
+                },
+                {
+                    "author": "Роман С.",
+                    "text": "Дочь всегда боялась компьютера, считала, что это не для нее. Курсы полностью изменили ее perception! Теперь она уверенно работает в графических редакторах, создает презентации и даже помогла мне с таблицей в Excel. Растим IT-леди!"
+                },
+                {
+                    "author": "Екатерина Ж.",
+                    "text": "Отличные курсы для старта. Ребенок получил общее представление о разных направлениях: программирование, дизайн, безопасность в сети. Теперь он понимает, что ему больше нравится, и мы будем выбирать узконаправленный курс. Очень полезный опыт."
+                },
+                {
+                    "author": "Виктор Т.",
+                    "text": "Главное достижение – у ребенка появилось хобби, которое может перерасти в профессию. Перестал просто зависать в телефоне, теперь с горящими глазами рассказывает о своих проектах и ищет информацию для их улучшения. Лучшая инвестиция в его будущее!"
+                }
+            ];
+
+            var container = document.getElementById("reviews-container");
+            var prefab = document.querySelector('.review');
+
+            reviews.forEach((el) =>
+            {
+                let review = prefab.cloneNode(true);
+                review.querySelector("h3").innerHTML = el["author"];
+                review.querySelector("p").innerHTML = el["text"];
+                prefab.parentNode.appendChild(review);
+                review.style.display = 'block';          
+            });
+
+            const windowHeight = window.innerHeight;
+            const reviewBlocks = document.querySelectorAll('.review');
+            function updateElements()
+            {
+                reviewBlocks.forEach((element, i) =>
+                {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    
+                    if (elementBottom < windowHeight * 0.9 || i < 4)
+                    {
+                        element.style.opacity = 1;
+                        element.style.transform = 'none';
+                    }
+                    else
+                    {
+                        let visibility = (elementBottom - windowHeight * 0.9) / 100;
+                        if (visibility > 1) visibility = 1;
+                        visibility = 1 - visibility;
+                        element.style.opacity = visibility;
+                        element.style.transform = "translateX(" + (1 - visibility) * 400 + "px)"
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateElements);
+            updateElements();
+        </script>
+        <footer>
+            Футер
+        </footer>
+    </body>
+</html>
