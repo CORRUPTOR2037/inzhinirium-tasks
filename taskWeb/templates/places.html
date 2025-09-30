@@ -1,7 +1,4 @@
-<html>
-    <head>
-        <title>Школа "Инжинириум"</title>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap" rel="stylesheet">
+{% include "header.html" %} 
         <style>
             body {
                 margin-top: 0px;
@@ -29,15 +26,20 @@
             }
             .left-column, .right-column {
                 display: inline-block;
-                height: 600px;
                 vertical-align:top;
             }
             .left-column {
                 margin-left: 15%;
                 width: 350px;
+                padding-top: 30px;
             }
             .right-column {
                 transition: opacity 300ms;
+                padding: 30px;
+                margin-bottom: 50px;
+                border: solid 2px #ffffff;
+                box-shadow: -2px 0px 5px 0px rgba(0, 0, 0, 0.33);
+                border-radius: 26px;
             }
             .city h2, .city h4 {
                 user-select: none;
@@ -55,6 +57,8 @@
             }
             .point-info label {
                 font-weight: bold;
+                margin-right: 10px;
+
             }
             .map {
                 background-color: rgb(64, 95, 131);
@@ -66,28 +70,35 @@
             }
             .point-info {
                 width: 350px;
-                margin-right: 50px;
+                margin-right: 10px;
+                vertical-align: top;
             }
-
+            #content-header {
+                text-align: center;
+                margin: 50px;
+            }
+            #map {
+                max-width: 700px;
+            }
+            h3 {
+                margin-top: 15px;
+            }
         </style>
-    </head>
-    <body>
-        <header>
-            Хедер
-        </header>
-        <div>
-            <div class="left-column">
-                <div id="cities">
+        <div id="content">
+            <h2 id="content-header">Учебные центры Инжинириум МГТУ им. Н.Э.Баумана</h2>
+            <div>
+                <div class="left-column">
+                    <div id="cities">
 
+                    </div>
                 </div>
-            </div>
-            <div class="right-column" style="opacity: 0">
-                <div class="point-info" style="display: inline-block;">
-                    <label>Адрес: </label><span class="data-line address">абвгд</span> <br><br>
-                    <label>Телефон: </label><span class="data-line phone">абвгд</span>
-                </div>
-                <div class="map" style="display: inline-block;">
-                    Карта
+                <div class="right-column" style="opacity: 0">
+                    <div class="point-info" style="display: inline-block;">
+                        <label>Адрес: </label><span class="data-line address">абвгд</span> <br>
+                        <label>Телефон: </label><span class="data-line phone">абвгд</span>
+                    </div>
+                    <img id="map" src="{{url_for('static', filename='map.png')}}">
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,7 +164,7 @@
                 div.className = "city";
 
                 let cityName = Object.keys(el)[0];
-                let cityNameEl = document.createElement('h2');
+                let cityNameEl = document.createElement('h3');
                 let subPointsLen = el[cityName].length;
                 
                 if (subPointsLen == 0)
@@ -172,8 +183,4 @@
                 citiesContainer.appendChild(div);
             });
         </script>
-        <footer>
-            Футер
-        </footer>
-    </body>
-</html>
+{% include "footer.html" %} 
